@@ -5,8 +5,15 @@ GIT
     motion_model (0.2.6)
 
 GIT
+  remote: git@github.com:boberetezeke/formotion.git
+  revision: 0cff7259375d22064f18f8cffac5cb2439219d1e
+  specs:
+    formotion (1.1.4)
+      bubble-wrap (>= 1.1.4)
+
+GIT
   remote: git@github.com:boberetezeke/teacup.git
-  revision: 5dac06f74b6964ddf345e42ecfdcb92654ad683e
+  revision: f7bdce094d108a7e7aadccae08484718ad287fe3
   specs:
     teacup (0.3.12)
       rake
@@ -15,8 +22,6 @@ GEM
   remote: https://rubygems.org/
   specs:
     bubble-wrap (1.1.4)
-    formotion (1.1.4)
-      bubble-wrap (>= 1.1.4)
     rake (0.9.2.2)
     sugarcube (0.11)
 
@@ -25,7 +30,7 @@ PLATFORMS
 
 DEPENDENCIES
   bubble-wrap
-  formotion
+  formotion!
   motion_model!
   sugarcube
   teacup!
