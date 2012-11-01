@@ -5,8 +5,10 @@ class AppDelegate
     rosie = User.create(:name => "rosie")
     angie = User.create(:name => "angie")
 
-    empty_dishwasher = Task.create(:name => "empty dishwasher", :user => {:id => abbie.id})
-    rake_leaves = Task.create(:name => "rake leaves", :user => {:id => steve.id})
+    empty_dishwasher = Task.create(:name => "empty dishwasher") #, :user => abbie)
+    empty_dishwasher.user = abbie
+    rake_leaves = Task.create(:name => "rake leaves") #, :user => steve)
+    rake_leaves.user = steve
     feed_chibi = Task.create(:name => "feed chibi")
 
     tasksController = TasksController.alloc.init
