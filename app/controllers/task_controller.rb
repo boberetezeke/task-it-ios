@@ -35,6 +35,8 @@ class TaskController < Formotion::FormController
     ]
   }
 
+  attr_reader :form
+
   def initWithTask(task, new_task)
     @task = task
     @new_task = new_task
@@ -55,6 +57,7 @@ class TaskController < Formotion::FormController
     super
 
     rightBarButtonItem = UIBarButtonItem.alloc.initWithTitle("Save", style: UIBarButtonItemStylePlain, target: self, action: "savePressed")
+    rightBarButtonItem.accessibilityLabel = "Save Button"
     self.navigationItem.rightBarButtonItem = rightBarButtonItem
   end
 
@@ -93,10 +96,12 @@ class TaskController < Formotion::FormController
           end
         end
       else
-        puts "invalid request"
+        puts "invalid request, response.status_code = #{response.inspect}"
       end
     end
 
-    self.navigationController.popViewControllerAnimated(true)
+    if self.navigationController
+      self.navigationController.popViewControllerAnimated(true)
+    end
   end
 end

@@ -5,3 +5,4 @@ gem 'sugarcube'
 gem 'teacup', :git => 'git@github.com:boberetezeke/teacup.git'
 gem 'formotion', :git => 'git@github.com:boberetezeke/formotion.git'
 gem 'motion_model', :git => 'git@github.com:boberetezeke/MotionModel.git'
+gem "webstub", "~> 0.3.0"

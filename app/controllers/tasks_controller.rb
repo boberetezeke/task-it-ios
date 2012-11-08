@@ -6,6 +6,7 @@ class TasksController < UIViewController
     end
 
     @tableView = subview(UITableView, position: :relative, dimensions: UIView::MAX_DIMENSIONS)
+    @tableView.accessibilityLabel = "tasks table"
   end
 
   def viewDidLoad
@@ -19,27 +20,36 @@ class TasksController < UIViewController
     BubbleWrap::HTTP.get("http://localhost:3000/users", 
                            {headers: {'Accept' => 'application/json'}}
     ) do |response|
-      users_json_hash = BW::JSON.parse(response.body.to_str)
-      puts "users json hash = #{users_json_hash}"
-      users_json_hash.each do |user_json_hash|
-        User.create(user_json_hash.dup)
-      end
-
-      BubbleWrap::HTTP.get("http://localhost:3000/tasks", 
-                           {headers: {'Accept' => 'application/json'}}
-      ) do |response|
-        tasks_json_hash = BW::JSON.parse(response.body.to_str)
-        puts "tasks json hash = #{tasks_json_hash}"
-        tasks_json_hash.each do |task_json_hash|
-          Task.create(task_json_hash.dup)
+      if response.ok? then
+        users_json_hash = BW::JSON.parse(response.body.to_str)
+        #puts "users json hash = #{users_json_hash}"
+        users_json_hash.each do |user_json_hash|
+          User.create(user_json_hash.dup)
         end
-        performSelector("updateView", withObject:nil, afterDelay:0.1)
+
+        BubbleWrap::HTTP.get("http://localhost:3000/tasks", 
+                             {headers: {'Accept' => 'application/json'}}
+        ) do |response|
+          if response.ok? then
+            tasks_json_hash = BW::JSON.parse(response.body.to_str)
+            #puts "tasks json hash = #{tasks_json_hash}"
+            tasks_json_hash.each do |task_json_hash|
+              Task.create(task_json_hash.dup)
+            end
+            performSelector("updateView", withObject:nil, afterDelay:0.1)
+          end
+        end
       end
     end
   end
 
   def updateView
     @tableView.reloadData
+  end
+
+  def displayUpdateError
+    alert = App.alert("Error")
+    alert.accessibilityLabel = "Error"
   end
 
   def viewWillAppear(animated)
@@ -90,7 +100,7 @@ class TasksController < UIViewController
 
   def dataDidChange(notification)
     if notification.object.is_a?(Task)
-      NSLog "a task changed, user info = #{notification.userInfo.inspect}"
+      #NSLog "a task changed, user info = #{notification.userInfo.inspect}"
     #elsif notification.object.is_a?(User)
     #  NSLog "a user changed, user info = #{notification.userInfo.inspect}"
     end

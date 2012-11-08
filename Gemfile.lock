@@ -24,6 +24,7 @@ GEM
     bubble-wrap (1.1.4)
     rake (0.9.2.2)
     sugarcube (0.11)
+    webstub (0.3.1)
 
 PLATFORMS
   ruby
@@ -34,3 +35,4 @@ DEPENDENCIES
   motion_model!
   sugarcube
   teacup!
+  webstub (~> 0.3.0)
